@@ -35,3 +35,12 @@ dependencies {
 checkstyle.toolVersion = '7.6'
 [checkstyleMain, checkstyleTest]*.ignoreFailures = true
 [findbugsMain, findbugsTest]*.ignoreFailures = true
+
+task jenkinsTest{
+    inputs.files test.outputs.files
+    doLast{
+        def timestamp = System.currentTimeMillis()
+        test.testResultsDir.eachFile { it.lastModified = timestamp }
+    }
+}
+build.dependsOn(jenkinsTest)
