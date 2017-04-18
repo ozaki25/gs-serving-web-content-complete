@@ -39,8 +39,10 @@ checkstyle.toolVersion = '7.6'
 task jenkinsTest{
     inputs.files test.outputs.files
     doLast{
-        def timestamp = System.currentTimeMillis()
-        test.testResultsDir.eachFile { it.lastModified = timestamp }
+        if(testResultsDir.exists()){
+            def timestamp = System.currentTimeMillis()
+            testResultsDir.eachFile { it.lastModified = timestamp }
+        }
     }
 }
 build.dependsOn(jenkinsTest)
