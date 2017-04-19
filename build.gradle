@@ -1,3 +1,11 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -6,13 +14,6 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
     }
 }
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
 
 jar {
     baseName = 'gs-serving-web-content'
@@ -35,3 +36,5 @@ dependencies {
 checkstyle.toolVersion = '7.6'
 [checkstyleMain, checkstyleTest]*.ignoreFailures = true
 [findbugsMain, findbugsTest]*.ignoreFailures = true
+jacocoTestReport.reports.xml.enabled true
+
