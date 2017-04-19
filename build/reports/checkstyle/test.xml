@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="7.6">
+<file name="/Users/ITPUser/Desktop/workspace/gs-serving-web-content-complete/src/test/java/hello/ApplicationTest.java">
+<error line="19" severity="warning" message="&apos;.*&apos; 形式のインポートの使用は避けるべきです - org.hamcrest.Matchers.*。" source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="20" severity="warning" message="&apos;.*&apos; 形式のインポートの使用は避けるべきです - org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*。" source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="21" severity="warning" message="&apos;.*&apos; 形式のインポートの使用は避けるべきです - org.springframework.test.web.servlet.result.MockMvcResultMatchers.*。" source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+</checkstyle>
