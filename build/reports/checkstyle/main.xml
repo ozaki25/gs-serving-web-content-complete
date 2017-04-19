@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<checkstyle version="7.6">
-<file name="/Users/ITPUser/Desktop/workspace/gs-serving-web-content-complete/src/main/java/hello/Application.java">
-<error line="10" severity="warning" message="&apos;method def&apos; の子のインデントレベル 9 は正しくありません。期待されるレベルは 8 です。" source="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck"/>
-</file>
-<file name="/Users/ITPUser/Desktop/workspace/gs-serving-web-content-complete/src/main/java/hello/GreetingController.java">
-<error line="17" severity="warning" message="行が 100 文字を超えています。" source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-</file>
-</checkstyle>
