@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'org.hidetake.ssh'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
@@ -11,7 +12,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE'
+        classpath 'org.hidetake:gradle-ssh-plugin:2.1.2'
     }
 }
 
@@ -28,9 +30,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.springframework.boot:spring-boot-devtools")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 checkstyle.toolVersion = '7.6'
@@ -38,3 +40,27 @@ checkstyle.toolVersion = '7.6'
 [findbugsMain, findbugsTest]*.ignoreFailures = true
 jacocoTestReport.reports.xml.enabled true
 
+remotes {
+    Spring {
+        host = spring_host
+        user = 'ec2-user'
+        identity = file("${System.properties['user.home']}/jenkins.pem")
+        knownHosts = allowAnyHosts
+    }
+}
+task deploy(dependsOn: 'build') << {
+    ssh.run {
+        session(remotes.Spring) {
+            put jar.archivePath.path, "spring/libs/"
+            executeSudo "nohup java -jar ~/spring/libs/${jar.archiveName} > ~/spring/logs/application.log 2> ~/spring/logs/error.log < /dev/null &"
+            /*
+            def timestamp = new Date().format('yyyyMMddHHmmss')
+            put jar.archivePath.path, "/tmp/"
+            executeSudo "mkdir /tmp/backup/spring-jar_${timestamp}"
+            executeSudo "mv ~/spring/libs/*.jar /tmp/backup/spring-jar_${timestamp}"
+            executeSudo "mv /tmp/${jar.archiveName} ~/spring/libs/"
+            executeSudo "nohup java -jar ~/spring/libs/${jar.archiveName} > ~/spring/logs/application.log 2> ~/spring/logs/error.log < /dev/null &"
+            */
+        }
+    }
+}
