@@ -18,8 +18,8 @@ buildscript {
 }
 
 jar {
-    baseName = 'gs-serving-web-content'
-    version =  '0.1.0'
+    baseName = 'app'
+    // version =  '0.1.0'
 }
 
 repositories {
@@ -35,6 +35,7 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
+springBoot.executable = true
 checkstyle.toolVersion = '7.6'
 [checkstyleMain, checkstyleTest]*.ignoreFailures = true
 [findbugsMain, findbugsTest]*.ignoreFailures = true
@@ -51,16 +52,10 @@ remotes {
 task deploy(dependsOn: 'build') << {
     ssh.run {
         session(remotes.Spring) {
-            put jar.archivePath.path, "spring/libs/"
-            executeSudo "nohup java -jar ~/spring/libs/${jar.archiveName} > ~/spring/logs/application.log 2> ~/spring/logs/error.log < /dev/null &"
-            /*
-            def timestamp = new Date().format('yyyyMMddHHmmss')
             put jar.archivePath.path, "/tmp/"
-            executeSudo "mkdir /tmp/backup/spring-jar_${timestamp}"
-            executeSudo "mv ~/spring/libs/*.jar /tmp/backup/spring-jar_${timestamp}"
-            executeSudo "mv /tmp/${jar.archiveName} ~/spring/libs/"
-            executeSudo "nohup java -jar ~/spring/libs/${jar.archiveName} > ~/spring/logs/application.log 2> ~/spring/logs/error.log < /dev/null &"
-            */
+            executeSudo "sudo mv /tmp/$jar.archiveName /var/spring_sample/"
+            executeSudo "chmod 500 /var/spring_sample/$jar.archiveName"
+            executeSudo "sudo service spring_sample restart"
         }
     }
 }
