@@ -55,7 +55,28 @@ task deploy(dependsOn: 'build') << {
             put jar.archivePath.path, "/tmp/"
             executeSudo "sudo mv /tmp/$jar.archiveName /var/spring_sample/"
             executeSudo "chmod 500 /var/spring_sample/$jar.archiveName"
+        }
+    }
+}
+
+task start << {
+    ssh.run {
+        session(remotes.Spring) {
+            executeSudo "sudo service spring_sample start"
+        }
+    }
+}
+task restart << {
+    ssh.run {
+        session(remotes.Spring) {
             executeSudo "sudo service spring_sample restart"
+        }
+    }
+}
+task stop << {
+    ssh.run {
+        session(remotes.Spring) {
+            executeSudo "sudo service spring_sample stop"
         }
     }
 }
