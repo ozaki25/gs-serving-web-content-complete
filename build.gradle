@@ -62,21 +62,21 @@ task deploy(dependsOn: 'build') << {
 task start << {
     ssh.run {
         session(remotes.Spring) {
-            executeSudo "sudo service spring_sample start"
+            executeSudo "sudo service spring_sample_dev start"
         }
     }
 }
 task restart << {
     ssh.run {
         session(remotes.Spring) {
-            executeSudo "sudo service spring_sample restart"
+            executeSudo "sudo service spring_sample_dev restart"
         }
     }
 }
 task stop << {
     ssh.run {
         session(remotes.Spring) {
-            executeSudo "sudo service spring_sample stop"
+            executeSudo "sudo service spring_sample_dev stop"
         }
     }
 }
