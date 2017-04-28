@@ -53,8 +53,8 @@ task deploy(dependsOn: 'build') << {
     ssh.run {
         session(remotes.Spring) {
             put jar.archivePath.path, "/tmp/"
-            executeSudo "sudo mv /tmp/$jar.archiveName /var/spring_sample/"
-            executeSudo "chmod 500 /var/spring_sample/$jar.archiveName"
+            executeSudo "sudo mv /tmp/$jar.archiveName /var/spring_sample_development/"
+            executeSudo "chmod 500 /var/spring_sample_development/$jar.archiveName"
         }
     }
 }
