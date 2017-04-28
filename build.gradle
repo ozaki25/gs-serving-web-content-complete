@@ -49,7 +49,7 @@ remotes {
         knownHosts = allowAnyHosts
     }
 }
-task deploy(dependsOn: 'build') << {
+task deploy(dependsOn: 'bootRepackage') << {
     ssh.run {
         session(remotes.Spring) {
             put jar.archivePath.path, "/tmp/"
